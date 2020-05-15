@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,21 +85,6 @@ public class XLItem extends LinearLayout {
     }
 
     /**
-     * 改变状态
-     * @param status
-     */
-    public void changeStatus(int status){
-        //判断状态
-        if (status == STATUS_NORMAL){
-            icon_view.setColorFilter(normal_color);
-            title_view.setTextColor(normal_color);
-        }else {
-            icon_view.setColorFilter(select_color);
-            title_view.setTextColor(select_color);
-        }
-    }
-
-    /**
      * 初始化操作
      */
     private void init() {
@@ -116,11 +102,66 @@ public class XLItem extends LinearLayout {
     }
 
     /**
+     * 改变状态
+     * @param status
+     */
+    public void changeStatus(int status){
+        //判断状态
+        if (status == STATUS_NORMAL){
+            icon_view.setColorFilter(normal_color);
+            title_view.setTextColor(normal_color);
+        }else {
+            icon_view.setColorFilter(select_color);
+            title_view.setTextColor(select_color);
+        }
+    }
+
+    /**
      * 测量
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        //获得此ViewGroup上级容器为其推荐的宽和高，以及计算模式
+        int widthMode = MeasureSpec. getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec. getMode(heightMeasureSpec);
+        int sizeWidth = MeasureSpec. getSize(widthMeasureSpec);
+        int sizeHeight = MeasureSpec. getSize(heightMeasureSpec);
+        int layoutWidth = 0;
+        int layoutHeight = 0;
+        // 计算出所有的childView的宽和高
+        measureChildren(widthMeasureSpec, heightMeasureSpec);
+
+        int cWidth = 0;
+        int cHeight = 0;
+        int count = getChildCount();
+
+        if(widthMode == MeasureSpec. EXACTLY){
+            //如果布局容器的宽度模式是确定的（具体的size或者match_parent），直接使用父窗体建议的宽度
+            layoutWidth = sizeWidth;
+        } else{
+            //如果是未指定或者wrap_content，我们都按照包裹内容做，宽度方向上只需要拿到所有子控件中宽度做大的作为布局宽度
+            for ( int i = 0; i < count; i++)  {
+                View child = getChildAt(i);
+                cWidth = child.getMeasuredWidth();
+                //获取子控件最大宽度
+                layoutWidth = cWidth > layoutWidth ? cWidth : layoutWidth;
+            }
+        }
+        //高度很宽度处理思想一样
+        if(heightMode == MeasureSpec. EXACTLY){
+            layoutHeight = sizeHeight;
+        } else{
+            for ( int i = 0; i < count; i++)  {
+                View child = getChildAt(i);
+                cHeight = child.getMeasuredHeight();
+                layoutHeight = cHeight > layoutHeight ? cHeight : layoutHeight;
+            }
+        }
+
+        // 测量并保存layout的宽高
+        setMeasuredDimension(layoutWidth, layoutHeight);
     }
 
     //set，get方法
