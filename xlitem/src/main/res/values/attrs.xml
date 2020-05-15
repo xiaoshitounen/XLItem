@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="XLItem">
+        <!--图标-->
+        <attr name="icon_id" format="reference"/>
+        <!--标题-->
+        <attr name="title" format="string"/>
+        <!--正常状态的颜色-->
+        <attr name="normal_color" format="color"/>
+        <!--选中状态的颜色-->
+        <attr name="select_color" format="color"/>
+        <!--布局文件-->
+        <attr name="layout_id" format="reference"/>
+    </declare-styleable>
+</resources>
