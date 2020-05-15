@@ -8,7 +8,7 @@
 
 app模块是使用例子，其运行效果：
 
-![]()
+![](https://android-1300729795.cos.ap-chengdu.myqcloud.com/project/Self_View/XLItem/XLItem.gif)
 
 ### 1. 添加依赖
 
