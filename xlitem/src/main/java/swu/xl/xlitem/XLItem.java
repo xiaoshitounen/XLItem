@@ -116,17 +116,6 @@ public class XLItem extends LinearLayout {
         }
     }
 
-    /**
-     * 测量
-     */
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        // 测量并保存layout的宽高
-        setMeasuredDimension(PxUtil.dpToPx(40,getContext()), PxUtil.dpToPx(60,getContext()));
-    }
-
     //set，get方法
     public int getIcon_id() {
         return icon_id;
